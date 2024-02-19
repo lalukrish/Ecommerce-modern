@@ -10,8 +10,6 @@ export default function AddToCart({ item }: { item: OrderItem }) {
   const { items, increase, decrease } = useCartService();
   const [existItem, setExistItem] = useState<OrderItem | undefined>();
 
-  console.log("existItem", items);
-
   useEffect(() => {
     setExistItem(items.find((x) => x.slug === item.slug));
   }, [item, items]);

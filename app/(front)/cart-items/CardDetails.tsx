@@ -10,8 +10,6 @@ export default function CardDetails() {
   const router = useRouter();
   const { items, itemsPrice, decrease, increase } = useCartService();
 
-  console.log("itemsPrice", itemsPrice);
-
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

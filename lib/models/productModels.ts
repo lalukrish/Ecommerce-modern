@@ -1,3 +1,34 @@
+import mongoose from "mongoose";
+
+const productSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    slug: { type: String },
+
+    category: { type: String },
+
+    image: { type: String },
+
+    price: { type: Number, required: true },
+
+    brand: { type: String },
+    rating: { type: Number },
+    numOfReviews: { type: Number },
+    countInStock: { type: Number },
+    description: { type: String },
+    isFeatured: { type: Boolean, default: false },
+    banner: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const ProductModel =
+  mongoose.models.Product || mongoose.model("Product", productSchema);
+
+export default ProductModel;
+
 export type Product = {
   _id?: string;
   name: string;
@@ -9,8 +40,9 @@ export type Product = {
   description: string;
   category: string;
   rating: number;
-  numReviews: number;
+  numOfReviews: number;
   countInStock: number;
+  isFeatured: boolean;
   colors?: [];
   sizes?: [];
 };
