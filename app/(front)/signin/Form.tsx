@@ -29,7 +29,10 @@ const Form = () => {
   });
 
   useEffect(() => {
+    console.log("Session data:", session); // Log the session data
     if (session && session.user) {
+      console.log("user-->", session.user);
+
       router.push(callbackUrl);
     }
   }, [callbackUrl, params, router, session]);

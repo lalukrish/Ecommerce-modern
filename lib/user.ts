@@ -14,6 +14,12 @@ const user = {
       password: bcrypt.hashSync("Test@123"),
       isAdmin: true,
     },
+    {
+      name: "john",
+      email: "admin123@gmail.com",
+      password: bcrypt.hashSync("Test@123"),
+      isAdmin: true,
+    },
   ],
 };
 
