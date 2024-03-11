@@ -4,6 +4,7 @@ import UserModel from "./models/userModel";
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 
+
 export const config = {
   providers: [
     CredentialsProvider({
@@ -37,7 +38,6 @@ export const config = {
     newUser: "/register",
     error: "/signin",
   },
-
   callbacks: {
     authorized({ request, auth }: any) {
       const protectedPaths = [
@@ -52,18 +52,13 @@ export const config = {
       if (protectedPaths.some((p) => p.test(pathname))) return !!auth;
       return true;
     },
-
-    jwt: ({ user, trigger, session, token }) => {
+    async jwt({ user, trigger, session, token }: any) {
       if (user) {
-        // Access the _doc property to get the actual user data
-        const userData = user._doc;
-        console.log("User Details:", userData);
-        return {
-          ...token,
-          id: userData._id,
-          name: userData.name,
-          email: userData.email,
-          // Include any other fields you need
+        token.user = {
+          _id: user._id,
+          email: user.email,
+          name: user.name,
+          isAdmin: user.isAdmin,
         };
       }
       if (trigger === "update" && session) {
@@ -75,18 +70,11 @@ export const config = {
       }
       return token;
     },
-
-    session: ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-          name: token.name, // This should now be correctly set
-          email: token.email, // This should now be correctly set
-          image: token.image, // This should now be correctly set
-        },
-      };
+    session: async ({ session, token }: any) => {
+      if (token) {
+        session.user = token.user;
+      }
+      return session;
     },
   },
 };
@@ -97,3 +85,4 @@ export const {
   signIn,
   signOut,
 } = NextAuth(config);
+

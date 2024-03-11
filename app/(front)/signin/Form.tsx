@@ -29,24 +29,20 @@ const Form = () => {
   });
 
   useEffect(() => {
-    console.log("Session data:", session); // Log the session data
     if (session && session.user) {
-      console.log("user-->", session.user);
-
       router.push(callbackUrl);
     }
   }, [callbackUrl, params, router, session]);
 
   const formSubmit: SubmitHandler<Inputs> = async (form) => {
     const { email, password } = form;
-    console.log("Form data:", { email, password }); // Log the form data
     signIn("credentials", {
       email,
       password,
     });
   };
   return (
-    <div className="max-w-sm  mx-auto card bg-base-300 my-4">
+    <div className="max-w-sm  mx-auto card bg-gray-900 my-4">
       <div className="card-body">
         <h1 className="card-title">Sign in</h1>
         {params.get("error") && (
@@ -60,11 +56,9 @@ const Form = () => {
           <div className="alert text-success">{params.get("success")}</div>
         )}
         <form onSubmit={handleSubmit(formSubmit)}>
-          <div className="my-2">
-            <label className="label" htmlFor="email">
-              Email
-            </label>
+          <div className="my-4">
             <input
+              placeholder="Email"
               type="text"
               id="email"
               {...register("email", {
@@ -80,11 +74,9 @@ const Form = () => {
               <div className="text-error">{errors.email.message}</div>
             )}
           </div>
-          <div className="my-2">
-            <label className="label" htmlFor="password">
-              Password
-            </label>
+          <div className="my-8">
             <input
+              placeholder="Password"
               type="password"
               id="password"
               {...register("password", {
